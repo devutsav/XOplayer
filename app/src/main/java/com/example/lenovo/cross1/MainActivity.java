@@ -1,8 +1,13 @@
 package com.example.lenovo.cross1;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,13 +21,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     Button b1, b2, b3, b4, b5, b6, b7, b8, b9;
+    Button notify;
     LinearLayout layout;
     int turn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
+        notify=(Button)findViewById(R.id.notify);
+        //notify.setEnabled(false);
+        notify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent();
+                PendingIntent pendingIntent=PendingIntent.getActivity(MainActivity.this, 0, i, 0);
+                NotificationCompat.Builder notification=new NotificationCompat.Builder(MainActivity.this);
+                        notification.setContentTitle("XOplayer notifies");
+                        notification.setContentText("GAME ON");
+                        notification.setSmallIcon(R.drawable.andicon);
+                        notification.setContentIntent(pendingIntent);
 
+                NotificationManager notm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                notm.notify(0,notification.build());
+            }
+        });
         layout=(LinearLayout)findViewById(R.id.layout);
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
         g=b7.getText().toString();
         h=b8.getText().toString();
         i=b9.getText().toString();
-        
+
         if(a.equals("X") && b.equals("X") && c.equals("X"))
         {
             Toast.makeText(MainActivity.this, "WINNER IS X", Toast.LENGTH_LONG).show();
@@ -364,6 +386,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+    public void showNotification()
+    {
 
     }
 
